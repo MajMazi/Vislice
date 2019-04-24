@@ -8,4 +8,5 @@ def (je_prastevilo):
 
 for x in range(2, 201):
     if je_prastevilo(x):
-        print(x)
+        print "fish"
+       
