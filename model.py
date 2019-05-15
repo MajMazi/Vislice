@@ -2,7 +2,7 @@ import random
 
 STEVILO_DOVOLJENIH_NAPAK = 10
 PRAVILNA_CRKA = '+'
-PONOVLEJENA_CRKA = 'O'
+PONOVLJENA_CRKA = 'O'
 NAPACNA_CRKA = '-'
 ZMAGA = 'W'
 PORAZ = 'X'
@@ -51,7 +51,7 @@ class Igra:
     def ugibaj(self, crka):
         crka = crka.upper()
         if crka in self.crke:
-            return PONOVLEJENA_CRKA
+            return PONOVLJENA_CRKA
         else:
             self.crke.append(crka)
         
