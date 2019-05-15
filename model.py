@@ -43,6 +43,12 @@ class Igra:
                 delni += '_ '
         return delni
 
+    def nepravilni_ugibi(self):
+        return ' '.join(self.napacne_crke())
+
+    def ugibaj(self, crka):
+        
+
 testno_geslo = 'požrtvovalnost'
 testne_crke = ["a", "e", "o","p"]
 zmagovalne_crke = [x for x in testno_geslo]
