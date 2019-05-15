@@ -1,3 +1,5 @@
+import random
+
 STEVILO_DOVOLJENIH_NAPAK = 10
 PRAVILNA_CRKA = '+'
 PONOVLEJENA_CRKA = 'O'
@@ -64,22 +66,27 @@ class Igra:
             else:
                 return NAPACNA_CRKA
 
+with open("besede.txt", "r", encoding = "utf-8") as datoteka_z_besedami:
+    bazen_besed = [vrstica.strip().upper() for vrstica in datoteka_z_besedami]
 
-testno_geslo = 'POŽRTVOVALNOST'
-testne_crke = ["A", "E", "O", "P"]
-zmagovalne_crke = [x for x in testno_geslo]
-igra = Igra(testno_geslo, testne_crke)
+def nova_igra():
+    return Igra(random.choice(bazen_besed))
 
-poskus = igra.ugibaj("r")
-print(poskus)
-poskus = igra.ugibaj("y")
-print(poskus)
-print(igra.napacne_crke())
-print(igra.pravilne_crke())
-print(igra.stevilo_napak())
-print(igra.zmaga())
-zmagana_igra = Igra(testno_geslo, zmagovalne_crke)
-print(zmagana_igra.zmaga())
-print(igra.poraz())
-print(igra.pravilni_del_gesla())
-print(igra.nepravilni_ugibi())
+#testno_geslo = 'POŽRTVOVALNOST'
+#testne_crke = ["A", "E", "O", "P"]
+#zmagovalne_crke = [x for x in testno_geslo]
+#igra = Igra(testno_geslo, testne_crke)
+#
+#poskus = igra.ugibaj("r")
+#print(poskus)
+#print(igra.napacne_crke())
+#print(igra.pravilne_crke())
+#print(igra.stevilo_napak())
+#print(igra.zmaga())
+#zmagana_igra = Igra(testno_geslo, zmagovalne_crke)
+#print(zmagana_igra.zmaga())
+#print(igra.poraz())
+#print(igra.pravilni_del_gesla())
+#print(igra.nepravilni_ugibi())
+
+#print(bazen_besed[3:8])
