@@ -1,4 +1,5 @@
 import random
+import json
 
 STEVILO_DOVOLJENIH_NAPAK = 10
 PRAVILNA_CRKA = '+'
@@ -67,15 +68,32 @@ class Igra:
             else:
                 return NAPACNA_CRKA
 
-with open("besede.txt", "r", encoding = "utf-8") as datoteka_z_besedami:
-    bazen_besed = [vrstica.strip().upper() for vrstica in datoteka_z_besedami]
+
 
 def nova_igra():
     return Igra(random.choice(bazen_besed))
 
 class Vislice:
-    def __init__(self):
+    def __init__(self, datoteka_s_stanjem, datoteka_z_besedami):
         self.igre = {}
+        self.datoteka_s_stanjem = datoteka_s_stanjem
+        self.datoteka_z_besedami = datoteka_z_besedami
+
+    def nalozi_igre_iz_datoteke(self):
+        with open(self.datoteka_s_stanjem, 'r', encoding='utf-8') as f:
+            igre = json.load(f)
+            self.igre = { int(id_igre) : (Igra(igre[id_igre]['geslo'], igre[id_igre]['crke']),
+            igre[id_igre]['poskus']
+            )
+                for id_igre in igre
+            }
+        return
+
+    def zapisi_igre_v_datoteko(self):
+        with open(self.datoteka_s_stanjem, 'w', encoding = 'utf-8') as f:
+            igre = {id_igre : {'geslo':igra.geslo, 'crke': igra.crke, 'poskus':poskus}
+                    for id_igre, (igra, poskus) in self.igre.items()}
+            json.dump(igre, f)
 
     def prost_id_igre(self):
         if len(self.igre) == 0:
@@ -84,15 +102,21 @@ class Vislice:
             return max(self.igre.keys()) + 1
     
     def nova_igra(self):
+        self.nalozi_igre_iz_datoteke()
         id_igre = self.prost_id_igre()
-        igra = nova_igra()
+        with open("besede.txt", "r", encoding = "utf-8") as f:
+            bazen_besed = [vrstica.strip().upper() for vrstica in f]
+        igra = Igra(random.choice(bazen_besed))
         self.igre[id_igre] = (igra, ZACETEK)
+        self.zapisi_igre_v_datoteko()
         return id_igre
 
     def ugibaj(self, id_igre, crka):
+        self.nalozi_igre_iz_datoteke()
         igra = self.igre[id_igre][0]
         novo_stanje = igra.ugibaj(crka)
         self.igre[id_igre] = (igra, novo_stanje)
+        self.zapisi_igre_v_datoteko()
         return
 
 #vislice = Vislice()
