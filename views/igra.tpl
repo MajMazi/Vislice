@@ -36,5 +36,10 @@ Pravilno geslo je {{igra.geslo}}.
 
 % else:
  <form action="/igra/" method="post">
-Črka: <input type="text" name="crka"><button type="submit">Pošlji ugib!</button></form>
+% for moja_crka in "ABCČDEFGHIJKLMNOPRSŠTUVZŽQWXYĆĐ":
+%  if moja_crka not in igra.crke:
+<button type="submit", name="crka", value="{{moja_crka}}">{{moja_crka}}</button>
+% end
+% end
+</form>
 % end
